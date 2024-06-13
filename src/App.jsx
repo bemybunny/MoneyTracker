@@ -14,10 +14,12 @@ const App = () => {
     date: '',
   });
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/createpost', form);
+      const response = await axios.post(`${BACKEND_URL}/createpost`, form);
       console.log(response.data);
       fetchTrack();
       setForm({ category: 'income', amount: '', info: '', date: '' });
@@ -28,7 +30,7 @@ const App = () => {
 
   const fetchTrack = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/getpost');
+      const response = await axios.get(`${BACKEND_URL}/getpost`);
       setList(response.data);
       let cost = 0;
       let inc = 0;
@@ -52,7 +54,7 @@ const App = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/deletepost/${id}`);
+      const response = await axios.delete(`${BACKEND_URL}/deletepost/${id}`);
       fetchTrack();
     } catch (err) {
       console.error('Error in frontend deletepost:', err);
